@@ -72,11 +72,11 @@ cake-factory=18/08/2017-https://minecraft.curseforge.com/projects/cake-factory
 Looks a lot better right? And meta will also be saved in the cache files.  
 The last feature is the right panel. If you reopen the tool it will display a list of all cached mods (blue) and mods which were added sometime, but don't have a cache file (red).  
 
-### Building it yourown
+## Building it your own
 
 Basically you only need this repo, jgoodies-forms-1.8.0.jar, jgoodies-common-1.8.1.jar and xswingx.jar.  
 Oh and Java 8 SDK of course.  
-Now build it like any other Java app. I don't know Maven and stuff, so no build script for you, sorry. :(   
+Now build it like any other Java app. I don't know Gradle and stuff, so no build script for you, sorry. :(   
 
 ## Contributing
 
@@ -87,7 +87,7 @@ Since this is not in active development and will probably never be, as long as i
 * I'll probably not accept PRs containing complex GUI builds (except it makes me get rid of jgoodies/xswingx) or add even more 3rd party libraries.
 
 Feel free to leave issues or take one and fulfill it.
-You can of course add your name to the authors if you made improvements (not for just renaming s***t though) 
+You can of course add your name to the authors if you made improvements (not for just renaming stuff though) 
 
 ## Authors
 
