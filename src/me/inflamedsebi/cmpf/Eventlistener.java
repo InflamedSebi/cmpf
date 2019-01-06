@@ -195,7 +195,7 @@ public class Eventlistener implements ActionListener {
             if (versions != null && versions.length > 0)
                 for (String version : versions)
                     if (!version.isEmpty())
-                        _resultIni.put(version, section, is.getString("updated") + "-" + is.getString("link"));
+                        _resultIni.put(version, section, is.getString("updated") + "|" + is.getString("downloads") + "|" + is.getString("link"));
         }
         _h.log("[OK] Rebuilt results.\n");
 

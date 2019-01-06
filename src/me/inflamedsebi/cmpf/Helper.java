@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,7 +85,11 @@ public class Helper {
 
     public String requestURL(String url) {
         String result = null;
-        try (Scanner scanner = new Scanner(new URL(url).openStream(), StandardCharsets.UTF_8.toString())) {
+        try {
+            URLConnection con = new URL(url).openConnection();
+            con.addRequestProperty("User-Agent", "Mozilla/4.0");
+            @SuppressWarnings("resource")
+            Scanner scanner = new Scanner(con.getInputStream(), StandardCharsets.UTF_8.toString());
             scanner.useDelimiter("\\A");
             result = scanner.hasNext() ? scanner.next() : null;
         } catch (Exception e) {
@@ -210,6 +215,11 @@ public class Helper {
         String reportDate = df.format(last);
 
         section.put("updated", reportDate);
+
+        m = Pattern.compile("(?:Total\\sDownloads<\\/div>\\s*<div\\sclass=\\\"info-data\\\">)([^<]*)(?:<\\/div>)").matcher(pageContent);
+        while (m.find()) {
+            section.put("downloads", m.group(1));
+        }
     }
 
     public void updateList(JComponent list) {
