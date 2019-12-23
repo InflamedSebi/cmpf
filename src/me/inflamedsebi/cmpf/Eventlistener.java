@@ -219,7 +219,7 @@ public class Eventlistener implements ActionListener {
         String text = area.getText();
         for (String line : text.split("\n")) {
             String mod = "";
-            Matcher m = Pattern.compile("(?:.*?\\/)([a-z-]*)(?:\\?.*)").matcher(line);
+            Matcher m = Pattern.compile("(?:.*?\\/)([a-z-]+)(?!.*\\/.*)").matcher(line);
             if (!m.matches()) {
                 m = Pattern.compile("([a-z-]*)").matcher(line);
                 if (!m.matches()) {
@@ -266,7 +266,7 @@ public class Eventlistener implements ActionListener {
 
         if (consistencies != null && !consistencies.isEmpty()) {
             _h.log("[...] We got matches:\n");
-            String url = "https://minecraft.curseforge.com/projects/";
+            String url = "https://www.curseforge.com/minecraft/mc-mods/";
             for (String con : consistencies) {
                 _h.log("[...] " + con + "\n");
                 _resultIni.put(con, "link", url + con);

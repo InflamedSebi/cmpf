@@ -9,8 +9,6 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import org.jdesktop.xswingx.PromptSupport;
-
 import com.jgoodies.forms.layout.FormLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,6 +18,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.DefaultCaret;
+
+import org.jdesktop.swingx.prompt.PromptSupport;
 
 public class Mainframe {
 	@SuppressWarnings("serial")
@@ -67,7 +67,7 @@ public class Mainframe {
 		
 		JTextArea jtaModlist = new JTextArea();
 		evt.registerComponentEvent(jtaModlist, "modlist");
-		PromptSupport.setPrompt("https://minecraft.curseforge.com/projects/thaumcraft\nthaumcraft", jtaModlist);
+		PromptSupport.setPrompt("https://www.curseforge.com/minecraft/mc-mods/thaumcraft\nthaumcraft", jtaModlist);
         PromptSupport.setFocusBehavior(PromptSupport.FocusBehavior.SHOW_PROMPT, jtaModlist);
 		frame.getContentPane().add(jtaModlist, "1, 3, fill, fill");
 		

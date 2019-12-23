@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -86,14 +86,18 @@ public class Helper {
     public String requestURL(String url) {
         String result = null;
         try {
-            URLConnection con = new URL(url).openConnection();
-            con.addRequestProperty("User-Agent", "Mozilla/4.0");
+            HttpURLConnection con =  (HttpURLConnection) new URL(url).openConnection();
+            con.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36");
+            con.addRequestProperty("Upgrade-Insecure-Requests", "1");
+            con.addRequestProperty("Sec-Fetch-User", "?1");
+            con.addRequestProperty("Accept", "*/*");
             @SuppressWarnings("resource")
             Scanner scanner = new Scanner(con.getInputStream(), StandardCharsets.UTF_8.toString());
             scanner.useDelimiter("\\A");
             result = scanner.hasNext() ? scanner.next() : null;
         } catch (Exception e) {
             _h.log("[ERR] Could not download '" + url + ".\n");
+            _h.log(e.getMessage()+"\n");
         }
         return result;
     }
@@ -120,7 +124,7 @@ public class Helper {
 
     public ArrayList<String> getDependents(String mod, boolean[] canceling) throws IOException {
 
-        String url = "https://minecraft.curseforge.com/projects/" + mod + "/relations/dependents?page=";
+        String url = "https://www.curseforge.com/minecraft/mc-mods/" + mod + "/relations/dependents?page=";
         int page = 1;
         String pageContent = _h.requestURL(url + page);
         if (pageContent == null) {
@@ -161,8 +165,10 @@ public class Helper {
             if (page > 1)
                 pageContent = _h.requestURL(url + page);
             // get all links to project sites except the current one and extract project names
-            Matcher m = Pattern.compile("(?:href=\\\"\\/projects\\/)(?!" + mod + ")([a-z-]*?)(?:\\\">)").matcher(pageContent);
+            // <a href="https://www.curseforge.com/minecraft/modpacks/whatever"  class="bg-white">
+            Matcher m = Pattern.compile("(?:href=\\\".*?\\/modpacks\\/)(?!" + mod + ")([a-z-]*?)(?:\\\" class=\\\"bg-white\\\">)").matcher(pageContent);
             while (m.find()) {
+            	//TODO filter duplicates?
                 matches.add(m.group(1));
             }
         } while (page++ < max && !canceling[0]);
